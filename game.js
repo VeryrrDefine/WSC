@@ -1340,7 +1340,9 @@ function get_offline_time() {
 }
 get_offline_time();
 
+//#region 存档
 /*存档*/
+
 function save() {
     localStorage.windSpiritCreation = btoa(JSON.stringify(player));
     shownoti("#autosave");
@@ -1423,7 +1425,9 @@ async function trueHardReset() {
         shownoti("#hardreset");
     }
 }
+//#endregion
 
+//#region 游戏
 /*游戏*/
 function buyWsc(tier) {
     getWscCost();
@@ -5830,7 +5834,9 @@ function fszqw() {
         alert("请等待游戏更新！有朝一日将打通书页的隔阂，用「生物炼金」的技术创造「仙境」。");
     }
 }
+//#endregion
 
+//#region 数值计算
 /*数值计算*/
 function scale(x) {
     return x.max(x.pow(2).div(v.scal01)).max(x.pow(4).div(v.scal02)).max(x.pow(8).div(v.scal03)).max(x.pow(16).div(v.scal04)).max(x.pow(32).div(v.scal05)).max(x.pow(64).div(v.scal06)).max(x.pow(128).div(v.scal07)).max(x.pow(256).div(v.scal08));
@@ -5872,7 +5878,9 @@ function hyp(a, b) {
     if (a.lte(2)) return a;
     else return a.max(1).log(2).max(1).log(2).mul(b).pow_base(2).pow_base(2);
 }
+//#endregion
 
+//#region 游戏机制之外……
 /*游戏机制之外……*/
 function transformToDecimal(object) {
     for (i in object) {
@@ -6313,7 +6321,9 @@ function styleDisplay() {
     if (player.news == true) document.getElementById("news").style.display = 'block';
     else document.getElementById("news").style.display = 'none';
 }
+//#endregion
 
+//#region 成就
 /*成就*/
 function getAch(i) {
     if (player.ach[i] != true) {
@@ -6404,6 +6414,7 @@ function comAch() {
 
 
 }
+//#endregion
 
 /*弹出提示*/
 function shownoti(notiname) {
