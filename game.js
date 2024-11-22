@@ -6416,6 +6416,85 @@ function comAch() {
 }
 //#endregion
 
+//#region 风灵显示...?
+var layername = ["扩散","扪敤","扫敥","扬敦","扭敧","扮敨","扯敩"];
+
+//显示风灵数据
+function displayWSdata(id){
+    if (id>8+8*5){ return "+0.000\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0×1.000\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0^1.000\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0¶1.000"}
+    let name = tiername[id];
+    return "+" + notation(player["wsca" + name]).padEnd(15, '\u00a0') 
+    + "×" + notation(v["wscm" + name]).padEnd(15, '\u00a0') 
+    + "^" + notation(v["wscp" + name]).padEnd(15, '\u00a0')
+    + "\u00b6" + notation(v["wsch" + name]).padEnd(15, '\u00a0')
+    /*
+    + (v["wscp" + name].eq(1) ? "" : ("^" + notation(v["wscp" + name]).padEnd(15, '\u00a0') ))
+    + (v["wsch" + name].eq(1) ? "" : ("\u00b6" + notation(v["wsch" + name]).padEnd(15, '\u00a0')))*/
+
+}
+
+//显示作成风灵所需资源
+function getWSCresourcename(layerID){
+    return (layerID==0 ? "能量" : (layername[layerID-1]+"点"))
+}
+
+//中文汉字显示
+var chineseordinal = "零壹贰叁肆伍陆柒捌玖";
+function toChineseOrdinal(id){
+    if (id < 0){
+        return "负"+toChineseOrdinal(-id);
+    }
+    let iddigit = Math.floor(Math.log10(id));
+    if (iddigit>=1){
+        return toChineseOrdinal(Math.floor(id/10))+chineseordinal[id%10]
+    }else{
+        return chineseordinal[id%10];
+    }
+
+}
+
+var zerotosixtyfour = []; // 0到64(方便显示？)
+for (let i = 1; i<=64; i++){
+    zerotosixtyfour.push({'id': i});
+}
+var wsColor = `333322332232233223323222 
+               322300310210211201301200
+               331320330230231221321220
+               131120130030031021121020
+               133122132032033023123022
+               113102112012013003103002
+               313302312212213203303202
+               111100110010011001101000`.replaceAll(/\s/g, "")
+
+function wscUnlocked(){
+    
+    if (player.hasUnlockedPL5) return 48
+    if (player.hasUnlockedPL4) return 40
+    if (player.hasUnlockedPL3) return 32
+    if (player.hasUnlockedPL2) return 24
+    if (player.hasUnlockedPL1) return 16
+    return 8
+}
+
+/**
+ * 
+ * @param {Number} id 风灵序号1-64
+ * @returns {String} 返回RGB 
+ */
+ function getWsColor(id){
+    color = wsColor.slice(id*3-3,id*3)
+    return "#"+color.replaceAll("3", "ff").replaceAll("2","aa").replaceAll("1", "55").replaceAll("0", "00")
+}
+
+function wscAutobuyable(id){
+    const between = (x,y,z) => (y >= x) && (y <= z);
+    if (between(1, id, 8)) return player.PL1upg[0]
+    if (between(9, id, 16)) return player.PL2tms.gte(4)
+    if (between(17, id, 32)) return true
+    if (between(33, id, Infinity)) return false
+}
+//#endregion
+
 /*弹出提示*/
 function shownoti(notiname) {
     var noti = document.querySelector(notiname);
